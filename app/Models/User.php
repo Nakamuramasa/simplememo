@@ -50,6 +50,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         $this->notify(new ResetPassword($token));
     }
 
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
