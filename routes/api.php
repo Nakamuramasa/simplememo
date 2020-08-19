@@ -1,6 +1,6 @@
 <?php
 
-Route::get('me', 'User\MeControlller@getMe');
+Route::get('me', 'User\MeController@getMe');
 
 Route::group(['middleware' => ['auth:api']], function (){
     Route::post('logout', 'Auth\LoginController@logout');
