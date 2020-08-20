@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers\Article;
 
-use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ArticleResource;
+use App\Repositories\Contracts\IArticle;
 
 class ArticleController extends Controller
 {
+    protected $articles;
+
+    public function __construct(IArticle $articles)
+    {
+        $this->articles = $articles;
+    }
+
     public function index()
     {
-        $articles = Article::all();
+        $articles = $this->articles->all();
         return ArticleResource::collection($articles);
     }
 
