@@ -4,11 +4,12 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Article;
 use App\Repositories\Contracts\IArticle;
+use App\Repositories\Eloquent\BaseRepository;
 
-class ArticleRepository implements IArticle
+class ArticleRepository extends BaseRepository implements IArticle
 {
-    public function all()
+    public function model()
     {
-        return Article::all();
+        return Article::class;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use App\Exceptions\ModelNotDefined;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -58,6 +59,12 @@ class Handler extends ExceptionHandler
             return response()->json(["errors" => [
                 "message" => "投稿が見つかりませんでした。"
             ]], 404);
+        }
+
+        if($exception instanceof ModelNotDefined && $request->expectsJson()){
+            return response()->json(["errors" => [
+                "message" => "モデルが定義されていません。"
+            ]], 500);
         }
 
         return parent::render($request, $exception);
