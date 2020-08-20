@@ -9,6 +9,12 @@ use App\Http\Resources\ArticleResource;
 
 class ArticleController extends Controller
 {
+    public function index()
+    {
+        $articles = Article::all();
+        return ArticleResource::collection($articles);
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [
