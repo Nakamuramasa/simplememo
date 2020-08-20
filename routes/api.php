@@ -6,7 +6,8 @@ Route::group(['middleware' => ['auth:api']], function (){
     Route::post('logout', 'Auth\LoginController@logout');
     Route::put('settings/password', 'User\SettingsController@updatePassword');
 
-    Route::post('store', 'Article\ArticleController@store');
+    Route::post('article', 'Article\ArticleController@store');
+    Route::put('article/{id}', 'Article\ArticleController@update');
 });
 
 Route::group(['middleware' => ['guest:api']], function (){
