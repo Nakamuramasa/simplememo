@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Article;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ArticleResource;
 
 class ArticleController extends Controller
 {
@@ -38,6 +39,6 @@ class ArticleController extends Controller
             'body' => $request->body
         ]);
 
-        return response()->json($article, 200);
+        return new ArticleResource($article);
     }
 }
