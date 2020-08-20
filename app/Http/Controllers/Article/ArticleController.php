@@ -25,12 +25,13 @@ class ArticleController extends Controller
 
     public function update(Request $request, $id)
     {
+        $article = Article::find($id);
+        $this->authorize('update', $article);
+
         $this->validate($request, [
             'title' => ['required', 'max:50', 'unique:articles,title,'.$id],
             'body' => ['required', 'max:500']
         ]);
-
-        $article = Article::find($id);
 
         $article->update([
             'title' => $request->title,
