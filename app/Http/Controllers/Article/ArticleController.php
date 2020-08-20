@@ -26,7 +26,7 @@ class ArticleController extends Controller
 
     public function update(Request $request, $id)
     {
-        $article = Article::find($id);
+        $article = Article::findOrFail($id);
         $this->authorize('update', $article);
 
         $this->validate($request, [
@@ -40,5 +40,14 @@ class ArticleController extends Controller
         ]);
 
         return new ArticleResource($article);
+    }
+
+    public function destroy($id)
+    {
+        $article = Article::findOrFail($id);
+        $this->authorize('delete', $article);
+        $article->delete();
+
+        return response()->json(["message" => "投稿を削除しました。"], 200);
     }
 }
