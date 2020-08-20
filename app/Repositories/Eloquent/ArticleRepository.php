@@ -12,4 +12,10 @@ class ArticleRepository extends BaseRepository implements IArticle
     {
         return Article::class;
     }
+
+    public function applyTags($id, array $data)
+    {
+        $article = $this->find($id);
+        $article->retag($data);
+    }
 }

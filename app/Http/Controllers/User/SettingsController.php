@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 use App\Rules\MatchOldPassword;
 use App\Rules\CheckSamePassword;
 use App\Http\Controllers\Controller;
+use App\Repositories\Contracts\IUser;
 
 class SettingsController extends Controller
 {
+    protected $users;
+
+    public function __construct(IUser $users)
+    {
+        $this->users = $users;
+    }
+
     public function updatePassword(Request $request)
     {
         $this->validate($request, [
@@ -16,7 +24,7 @@ class SettingsController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed', new CheckSamePassword]
         ]);
 
-        $request->user()->update([
+        $this->users->update(auth()->id(), [
             'password' => bcrypt($request->password)
         ]);
 

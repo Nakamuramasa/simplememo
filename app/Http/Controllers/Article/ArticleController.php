@@ -22,6 +22,12 @@ class ArticleController extends Controller
         return ArticleResource::collection($articles);
     }
 
+    public function findArticle($id)
+    {
+        $article = $this->articles->find($id);
+        return new ArticleResource($article);
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -30,7 +36,8 @@ class ArticleController extends Controller
             'tags' => ['required']
         ]);
 
-        $article = auth()->user()->articles()->create([
+        $article = $this->articles->create([
+            'user_id' => auth()->id(),
             'title' => $request->title,
             'body' => $request->body
         ]);
@@ -41,7 +48,7 @@ class ArticleController extends Controller
 
     public function update(Request $request, $id)
     {
-        $article = Article::findOrFail($id);
+        $article = $this->articles->find($id);
         $this->authorize('update', $article);
 
         $this->validate($request, [
@@ -50,20 +57,20 @@ class ArticleController extends Controller
             'tags' => ['required']
         ]);
 
-        $article->update([
+        $article = $this->articles->update($id ,[
             'title' => $request->title,
             'body' => $request->body
         ]);
-        $article->retag($request->tags);
+        $this->articles->applyTags($id, $request->tags);
 
         return new ArticleResource($article);
     }
 
     public function destroy($id)
     {
-        $article = Article::findOrFail($id);
+        $article = $this->articles->find($id);
         $this->authorize('delete', $article);
-        $article->delete();
+        $this->articles->delete($id);
 
         return response()->json(["message" => "投稿を削除しました。"], 200);
     }

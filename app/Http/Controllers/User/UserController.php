@@ -21,4 +21,10 @@ class UserController extends Controller
         $users = $this->users->all();
         return UserResource::collection($users);
     }
+
+    public function findUser($id)
+    {
+        $user = $this->users->find($id);
+        return new UserResource($user);
+    }
 }
