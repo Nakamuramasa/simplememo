@@ -13,13 +13,15 @@ class ArticleController extends Controller
     {
         $this->validate($request, [
             'title' => ['required', 'max:50'],
-            'body' => ['required', 'max:500']
+            'body' => ['required', 'max:500'],
+            'tags' => ['required']
         ]);
 
         $article = auth()->user()->articles()->create([
             'title' => $request->title,
             'body' => $request->body
         ]);
+        $article->tag($request->tags);
 
         return response()->json($article, 200);
     }
@@ -31,13 +33,15 @@ class ArticleController extends Controller
 
         $this->validate($request, [
             'title' => ['required', 'max:50', 'unique:articles,title,'.$id],
-            'body' => ['required', 'max:500']
+            'body' => ['required', 'max:500'],
+            'tags' => ['required']
         ]);
 
         $article->update([
             'title' => $request->title,
             'body' => $request->body
         ]);
+        $article->retag($request->tags);
 
         return new ArticleResource($article);
     }
