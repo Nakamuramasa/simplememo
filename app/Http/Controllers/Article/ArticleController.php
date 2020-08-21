@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ArticleResource;
 use App\Repositories\Contracts\IArticle;
+use App\Repositories\Eloquent\Criteria\{
+    LatestFirst,
+    ForUser
+};
 
 class ArticleController extends Controller
 {
@@ -18,7 +22,10 @@ class ArticleController extends Controller
 
     public function index()
     {
-        $articles = $this->articles->all();
+        $articles = $this->articles->withCriteria([
+            new LatestFirst(),
+            // new ForUser(2)
+        ])->all();
         return ArticleResource::collection($articles);
     }
 
