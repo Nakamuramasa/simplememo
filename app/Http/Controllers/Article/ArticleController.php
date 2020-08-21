@@ -8,7 +8,8 @@ use App\Http\Resources\ArticleResource;
 use App\Repositories\Contracts\IArticle;
 use App\Repositories\Eloquent\Criteria\{
     LatestFirst,
-    ForUser
+    ForUser,
+    EagerLoad
 };
 
 class ArticleController extends Controller
@@ -25,13 +26,16 @@ class ArticleController extends Controller
         $articles = $this->articles->withCriteria([
             new LatestFirst(),
             // new ForUser(2)
+            new EagerLoad(['user'])
         ])->all();
         return ArticleResource::collection($articles);
     }
 
     public function findArticle($id)
     {
-        $article = $this->articles->find($id);
+        $article = $this->articles->withCriteria([
+            new EagerLoad(['user'])
+        ])->find($id);
         return new ArticleResource($article);
     }
 
