@@ -85,4 +85,14 @@ class ArticleController extends Controller
 
         return response()->json(["message" => "投稿を削除しました。"], 200);
     }
+
+    public function like($id)
+    {
+        $this->articles->like($id);
+        $article = $this->articles->withCriteria([
+            new EagerLoad(['user'])
+        ])->find($id);
+
+        return new ArticleResource($article);
+    }
 }

@@ -18,4 +18,14 @@ class ArticleRepository extends BaseRepository implements IArticle
         $article = $this->find($id);
         $article->retag($data);
     }
+
+    public function like($id)
+    {
+        $article = $this->model->findOrFail($id);
+        if($article->isLikedByUser(auth()->id())){
+            $article->unlike();
+        }else{
+            $article->like();
+        }
+    }
 }
