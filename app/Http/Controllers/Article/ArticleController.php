@@ -95,4 +95,10 @@ class ArticleController extends Controller
 
         return new ArticleResource($article);
     }
+
+    public function checkIfUserHasLiked($articleId)
+    {
+        $isLiked = $this->articles->isLikedByUser($articleId);
+        return response()->json(['liked' => $isLiked], 200);
+    }
 }

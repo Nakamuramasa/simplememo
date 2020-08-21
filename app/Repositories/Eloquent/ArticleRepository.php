@@ -28,4 +28,10 @@ class ArticleRepository extends BaseRepository implements IArticle
             $article->like();
         }
     }
+
+    public function isLikedByUser($id)
+    {
+        $article = $this->model->findOrFail($id);
+        return $article->isLikedByUser(auth()->id());
+    }
 }

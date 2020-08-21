@@ -17,6 +17,7 @@ Route::group(['middleware' => ['auth:api']], function (){
     Route::delete('article/{id}', 'Article\ArticleController@destroy');
 
     Route::post('articles/{id}/like', 'Article\ArticleController@like');
+    Route::get('articles/{id}/liked', 'Article\ArticleController@checkIfUserHasLiked');
 });
 
 Route::group(['middleware' => ['guest:api']], function (){
