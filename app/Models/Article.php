@@ -10,7 +10,7 @@ class Article extends Model
 {
     use Taggable, Likeable;
 
-    protected $fillable=[
+    protected $fillable = [
         'user_id', 'title', 'body'
     ];
 

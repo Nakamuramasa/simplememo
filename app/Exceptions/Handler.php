@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use App\Exceptions\ModelNotDefined;
+use App\Exceptions\CannotFollowYourself;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -65,6 +66,12 @@ class Handler extends ExceptionHandler
             return response()->json(["errors" => [
                 "message" => "モデルが定義されていません。"
             ]], 500);
+        }
+
+        if($exception instanceof CannotFollowYourself && $request->expectsJson()){
+            return response()->json(["errors" => [
+                "message" => "自分自身をフォローすることはできません。"
+            ]], 422);
         }
 
         return parent::render($request, $exception);

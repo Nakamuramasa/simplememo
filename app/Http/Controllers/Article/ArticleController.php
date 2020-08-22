@@ -36,6 +36,7 @@ class ArticleController extends Controller
         $article = $this->articles->withCriteria([
             new EagerLoad(['user'])
         ])->find($id);
+
         return new ArticleResource($article);
     }
 

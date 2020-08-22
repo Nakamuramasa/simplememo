@@ -18,6 +18,9 @@ Route::group(['middleware' => ['auth:api']], function (){
 
     Route::post('articles/{id}/like', 'Article\ArticleController@like');
     Route::get('articles/{id}/liked', 'Article\ArticleController@checkIfUserHasLiked');
+
+    Route::post('users/{id}/follow', 'User\UserController@follow');
+    Route::get('users/{id}/followed', 'User\UserController@checkIfUserHasFollowed');
 });
 
 Route::group(['middleware' => ['guest:api']], function (){

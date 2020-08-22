@@ -19,6 +19,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'username' => $this->username,
             'email' => $this->email,
+            'follows' => $this->follows()->count(),
             'articles' => ArticleResource::collection(
                 $this->whenLoaded('articles')
             ),

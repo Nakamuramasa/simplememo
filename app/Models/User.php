@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Following;
 use App\Notifications\VerifyEmail;
 use App\Notifications\ResetPassword;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, Following;
 
     /**
      * The attributes that are mass assignable.
