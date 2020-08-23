@@ -31,6 +31,12 @@ class ArticleController extends Controller
         return ArticleResource::collection($articles);
     }
 
+    public function getForUser($userId)
+    {
+        $articles = $this->articles->findWhere('user_id', $userId);
+        return ArticleResource::collection($articles);
+    }
+
     public function findArticle($id)
     {
         $article = $this->articles->withCriteria([

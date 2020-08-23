@@ -32,7 +32,7 @@ class UserController extends Controller
         return UserResource::collection($users);
     }
 
-    public function findUser($id)
+    public function findId($id)
     {
         $user = $this->users->withCriteria([
             new EagerLoad(['articles'])

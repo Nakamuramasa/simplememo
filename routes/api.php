@@ -6,7 +6,8 @@ Route::get('articles', 'Article\ArticleController@index');
 Route::get('articles/{id}', 'Article\ArticleController@findArticle');
 
 Route::get('users', 'User\UserController@index');
-Route::get('users/{id}', 'User\UserController@findUser');
+Route::get('user/{id}', 'User\UserController@findId');
+Route::get('users/{id}/articles', 'Article\ArticleCOntroller@getForUser');
 
 Route::group(['middleware' => ['auth:api']], function (){
     Route::post('logout', 'Auth\LoginController@logout');
