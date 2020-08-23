@@ -18,7 +18,10 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'username' => $this->username,
-            'email' => $this->email,
+            $this->mergeWhen(auth()->check() && auth()->id() == $this->id, [
+                'email' => $this->email,
+            ]),
+            'follow' => $this->users()->count(),
             'followers' => $this->follows()->count(),
             'articles' => ArticleResource::collection(
                 $this->whenLoaded('articles')

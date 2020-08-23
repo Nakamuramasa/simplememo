@@ -45,9 +45,7 @@ class UserController extends Controller
     {
         if(auth()->id() == $id) throw new CannotFollowYourself();
         $this->users->follow($id);
-        $user = $this->users->withCriteria([
-            new EagerLoad(['articles'])
-        ])->find($id);
+        $user = $this->users->find($id);
 
         return new UserResource($user);
     }
