@@ -47,7 +47,7 @@ class LoginController extends Controller
         $user = $this->guard()->user();
         if($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()){
             return response()->json(["errors" => [
-                "verification" => "メールアドレスが有効化されていません。"
+                "message" => "メールアドレスが有効化されていません。"
             ]], 422);
         }
 
