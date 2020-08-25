@@ -29,7 +29,7 @@ class VerificationController extends Controller
     {
         if(! URL::hasValidSignature($request)){
             return response()->json(["errors" => [
-                "message" => "無効なURLです。"
+                "message" => "URLの有効期限が切れています。"
             ]], 422);
         }
 
