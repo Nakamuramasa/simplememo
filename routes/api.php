@@ -15,6 +15,7 @@ Route::group(['middleware' => ['auth:api']], function (){
 
     Route::post('article', 'Article\ArticleController@store');
     Route::put('article/{id}', 'Article\ArticleController@update');
+    Route::get('articles/{id}/byUser', 'Article\ArticleController@userOwnsArticle');
     Route::delete('article/{id}', 'Article\ArticleController@destroy');
 
     Route::post('articles/{id}/like', 'Article\ArticleController@like');
