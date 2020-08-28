@@ -50,11 +50,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if($exception instanceof AuthorizationException && $request->expectsJson()){
-            return response()->json(["errors" => [
-                "message" => "アクセスが許可されていません。"
-            ]], 403);
+        if($exception instanceof AuthorizationException){
+            if($request->expectsJson()){
+                return response()->json(["errors" => [
+                    "message" => "アクセスが許可されていません。"
+                ]], 403);
+            }
         }
+
 
         if($exception instanceof ModelNotFoundException && $request->expectsJson()){
             return response()->json(["errors" => [

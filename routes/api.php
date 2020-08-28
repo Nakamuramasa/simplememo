@@ -7,6 +7,7 @@ Route::get('articles/{id}', 'Article\ArticleController@findArticle');
 
 Route::get('users', 'User\UserController@index');
 Route::get('user/{id}', 'User\UserController@findId');
+Route::get('user/{username}', 'User\UserController@findByUsername');
 Route::get('users/{id}/articles', 'Article\ArticleCOntroller@getForUser');
 
 Route::group(['middleware' => ['auth:api']], function (){

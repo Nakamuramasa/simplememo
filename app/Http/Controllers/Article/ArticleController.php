@@ -46,6 +46,15 @@ class ArticleController extends Controller
         return new ArticleResource($article);
     }
 
+    public function userOwnsArticle($id)
+    {
+        $article = $this->articles->withCriteria([
+            new ForUser(auth()->id())
+        ])->findWhereFirst('id', $id);
+
+        return new ArticleResource($article);
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -107,14 +116,5 @@ class ArticleController extends Controller
     {
         $isLiked = $this->articles->isLikedByUser($articleId);
         return response()->json(['liked' => $isLiked], 200);
-    }
-
-    public function userOwnsArticle($id)
-    {
-        $article = $this->articles->withCriteria([
-            new ForUser(auth()->id())
-        ])->findWhereFirst('id', $id);
-
-        return new ArticleResource($article);
     }
 }

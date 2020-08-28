@@ -41,6 +41,13 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
+    public function findByUsername(String $username)
+    {
+        $user = $this->users->findWhereFirst('username', $username);
+
+        return new UserResource($user);
+    }
+
     public function follow($id)
     {
         if(auth()->id() == $id) throw new CannotFollowYourself();
