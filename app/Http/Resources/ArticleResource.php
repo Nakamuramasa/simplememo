@@ -23,6 +23,7 @@ class ArticleResource extends JsonResource
                 'normalized' => $this->tagArrayNormalized
             ],
             'likes_count' => $this->likes()->count(),
+            'liked' => !! $this->likes()->where('user_id', auth()->id())->count(),
             'created_at_dates' => [
                 'created_at_human' => $this->created_at->diffForHumans(),
                 'created_at' => $this->created_at->format('Y/m/d H:i')
