@@ -23,6 +23,7 @@ class UserResource extends JsonResource
             ]),
             'follow' => $this->users()->count(),
             'followers' => $this->follows()->count(),
+            'followed' => (bool)$this->follows()->where('user_id', auth()->id())->count(),
             'articles' => ArticleResource::collection(
                 $this->whenLoaded('articles')
             ),
